@@ -23,8 +23,20 @@ require("lazy").setup({
             "MunifTanjim/nui.nvim", "s1n7ax/nvim-window-picker"
         }
     }, {"nvim-treesitter/nvim-treesitter"}, {"neovim/nvim-lspconfig"},
-    {"williamboman/mason.nvim", build = ":MasonUpdate"},
-    {'sainnhe/gruvbox-material', lazy = false, priority = 1000},
+    {"williamboman/mason.nvim", build = ":MasonUpdate"}, {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        dependencies = {"williamboman/mason.nvim"},
+        config = function()
+            require("mason-tool-installer").setup({
+                ensure_installed = {
+                    "clangd", "debugpy", "flake8", "golangci-lint", -- "delve", 
+                    "isort", "lua-language-server", "luaformatter", "prettierd",
+                    "pylint", "pyright", "shellcheck", "stylua"
+                },
+                start_delay = 0
+            })
+        end
+    }, {'sainnhe/gruvbox-material', lazy = false, priority = 1000},
     {"hrsh7th/cmp-nvim-lsp"}, {"hrsh7th/cmp-buffer"}, {"hrsh7th/cmp-path"},
     {"hrsh7th/cmp-cmdline"}, {"hrsh7th/nvim-cmp"},
     {"hrsh7th/cmp-nvim-lsp-signature-help"}, {
