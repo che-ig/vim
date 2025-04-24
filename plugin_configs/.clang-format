@@ -1,0 +1,19 @@
+BasedOnStyle: Google
+IndentWidth: 2
+ColumnLimit: 120
+
+SortIncludes: CaseInsensitive
+AlignArrayOfStructures: Right
+AlignAfterOpenBracket: AlwaysBreak
+BracedInitializerIndentWidth: 2
+
+AllowShortFunctionsOnASingleLine: Empty
+AlignEscapedNewlines: LeftWithLastLine
+
+AlignConsecutiveBitFields:
+    Enabled: true
+    AcrossEmptyLines: true
+    AcrossComments: false
+
+MaxEmptyLinesToKeep: 1
+SeparateDefinitionBlocks: Always

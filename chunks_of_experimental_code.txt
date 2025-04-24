@@ -1,0 +1,251 @@
+++++++++++++++++++++  LSP ++++++++++++++++++++
+
+-- https://www.getman.io/posts/programming-go-in-nevim/
+-- https://gist.github.com/sergii4/afd763bb378aec45aba17c20b3cf2115#file-lsp_config-lua
+
+
+-- https://smarttech101.com/nvim-lsp-configure-language-servers-shortcuts-highlights/
+    -- if client.server_capabilities.documentHighlightProvider then
+    --     vim.cmd([[
+    --   hi! LspReferenceRead cterm=bold ctermbg=235 guibg=#e5c07b guifg=#000087 gui=bold
+    --   hi! LspReferenceText cterm=bold ctermbg=235 guibg=#e5c07b guifg=#000087 gui=bold
+    --   hi! LspReferenceWrite cterm=bold ctermbg=235 guibg=#e5c07b guifg=#000087 gui=bold
+    -- ]])
+    --     vim.api.nvim_create_augroup("lsp_document_highlight", {})
+    --     vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
+    --         group = "lsp_document_highlight",
+    --         buffer = 0,
+    --         callback = vim.lsp.buf.document_highlight
+    --     })
+    --     vim.api.nvim_create_autocmd("CursorMoved", {
+    --         group = "lsp_document_highlight",
+    --         buffer = 0,
+    --         callback = vim.lsp.buf.clear_references
+    --     })
+    -- end
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+++++++++++++++++++++  DAP_GO ++++++++++++++++++++
+---require('dap').set_log_level('TRACE')
+
+-- require('dap-go').setup({})
+--
+-- local dap = require("dap")
+--
+-- dap.adapters.delve = {
+--     type = 'server',
+--     port = '${port}',
+--     executable = {
+--         command = 'dlv',
+--         args = {'dap', '-l', '127.0.0.1:${port}', ' -log'} --  --log-output=dap'
+--     }
+-- }
+--
+-- dap.configurations.go = {
+--     {type = "delve", name = "Debug", request = "launch", program = "${file}"},
+--     {
+--         type = "delve",
+--         name = "Debug test", -- configuration for debugging test files
+--         request = "launch",
+--         mode = "test",
+--         program = "${file}"
+--     }, -- works with go.mod packages and sub packages 
+--     {
+--         type = "delve",
+--         name = "Debug test (go.mod)",
+--         request = "launch",
+--         mode = "test",
+--         program = "./${relativeFileDirname}"
+--     }
+-- }
+-- require('dap-go').setup()
+-- local dap = require("dap")
+-- require('dap').set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
+--
+-- -- dap.adapters.go = function(callback, config)
+-- --     -- Wait for delve to start
+-- --     vim.defer_fn(function()
+-- --         callback({type = "server", host = "127.0.0.1", port = "38697"})
+-- --     end, 100)
+-- -- end
+--
+-- dap.adapters.go = {
+--     type = "server",
+--     port = "${port}",
+--     executable = {
+--         command = vim.fn.stdpath("data") .. '/mason/bin/dlv',
+--         args = {"dap", "-l", "127.0.0.1:${port}"}
+--     }
+-- }
+--
+-- dap.configurations.go = {
+--     {type = "go", name = "Debug", request = "launch", program = "${file}"}
+-- }
+--
+-- require('dap-go').setup()
+-- local dap = require("dap")
+-- dap.adapters.delve = {type = "server", host = "127.0.0.1", port = 38697}
+
+-- local dap_ok, dap = pcall(require, "dap")
+-- if not (dap_ok) then
+--     print("nvim-dap not installed!")
+--     return
+-- end
+--
+--
+-- dap.configurations = {
+--     go = {
+--         {
+--             type = "go", -- Which adapter to use
+--             name = "Debug", -- Human readable name
+--             request = "launch", -- Whether to "launch" or "attach" to program
+--             program = "${file}" -- The buffer you are focused on when running nvim-dap
+--         }
+--     }
+-- }
+--
+-- dap.adapters.go = {
+--     type = "server",
+--     port = "${port}",
+--     executable = {
+--         command = vim.fn.stdpath("data") .. '/mason/bin/dlv',
+--         args = {"dap", "-l", "127.0.0.1:${port}"}
+--     }
+-- }
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+++++++++++++++++++++  Commands ++++++++++++++++++++
+local api = vim.api
+
+api.nvim_create_user_command('Flake8', function(opts)
+    local cmd = "flake8"
+    -- print("flake8")
+    if vim.fn.executable(cmd) then
+        -- print("flake8", opts.args)
+        cmd = string.format("%s %s", cmd, opts.args)
+        -- print(vim.fn.system(cmd))
+
+        local output = vim.split(vim.trim(vim.fn.system(cmd)), "\n")
+        print(vim.inspect(output))
+        return output
+    end
+
+end, {desc = 'First flake8', nargs = 1, bang = true})
+
+api.nvim_create_user_command('Upper', function(opts)
+    print(string.upper(opts.args))
+end, {nargs = 1})
+
+api.nvim_create_user_command('Tags', function(opts)
+    local cursor_word = vim.fn.expand("<cword>")
+    print(cursor_word)
+    print(vim.inspect(vim.fn.taglist(string.format("^%s", cursor_word))))
+end, {desc = "Find tags"})
+
+vim.api.nvim_create_user_command('Upper2', function(opts)
+    print(opts.args)
+end, {
+    nargs = 1,
+    complete = function(ArgLead, CmdLine, CursorPos)
+        -- return completion candidates as a list-like table
+        return {'foo', 'bar', 'baz'}
+    end
+})
+
+api.nvim_create_user_command('Test', function(opts)
+    -- print(string.upper(opts.args))
+    print("xxxx")
+    api.nvim_set_hl(0, "FoldColumn",
+                    {ctermbg = 70, bg = "#d72323", fg = "#11cbd7", bold = true})
+end, {})
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++  Events ++++++++++++++++++++
+local group = vim.api.nvim_create_augroup("my_events", {clear = true})
+local hide = uv.new_timer()
+local index = 0
+
+api.nvim_create_autocmd({"FocusLost", "FocusGained"}, {
+    group = group,
+    callback = function(ev)
+        local is_caps_on = is_capslock()
+        if ev.event == "FocusGained" then
+            hide:stop()
+            print(string.format("FocusGained index %d, capslock_is_on %d",
+                                index, is_caps_on))
+            index = index + 1
+        else
+            hide:start(5000, 0, function()
+                print("FocusLost")
+                api.nvim_input("<esc>")
+            end)
+        end
+    end
+})
+
+++++++++++++++++++++  linters (none-ls) ++++++++++++++++++++
+local p_lint = {
+    name = "pylint",
+    meta = {
+        url = "https://github.com/PyCQA/pylint",
+        description = [[
+Pylint is a Python static code analysis tool which looks for programming
+errors, helps enforcing a coding standard, sniffs for code smells and offers
+simple refactoring suggestions.
+
+If you prefer to use the older "message-id" names for these errors (i.e.
+"W0612" instead of "unused-variable"), you can customize pylint's resulting
+diagnostics like so:
+
+```lua
+null_ls = require("null-ls")
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.pylint.with({
+      diagnostics_postprocess = function(diagnostic)
+        diagnostic.code = diagnostic.message_id
+      end,
+    }),
+    null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.black,
+    ...,
+  },
+})
+```
+]]
+    },
+    method = methods.internal.DIAGNOSTICS,
+    filetypes = {"python"},
+    generator = null_ls.generator({
+        command = "pylint",
+        to_stdin = true,
+        args = {"--from-stdin", "$FILENAME", "-f", "json"},
+        format = "json",
+        check_exit_code = function(code)
+            return code ~= 32
+        end,
+        on_output = helpers.diagnostics.from_json({
+            attributes = {
+                row = "line",
+                col = "column",
+                code = "symbol",
+                severity = "type",
+                message = "message",
+                message_id = "message-id",
+                symbol = "symbol",
+                source = "pylint"
+            },
+            severities = {
+                convention = helpers.diagnostics.severities["information"],
+                refactor = helpers.diagnostics.severities["information"]
+            },
+            offsets = {col = 1, end_col = 1}
+        }),
+        cwd = helpers.cache.by_bufnr(function(params)
+            return
+                u.root_pattern( -- https://pylint.readthedocs.io/en/latest/user_guide/usage/run.html#command-line-options
+                "pylintrc", ".pylintrc", "pyproject.toml", "setup.cfg",
+                "tox.ini")(params.bufname)
+        end)
+    })
+}
