@@ -22,5 +22,5 @@ nvim_win.setup({
     -- The border style to use for the floating window.
     border = 'single'
 })
-
+-- Показывами для каждого окна небольшую плашку с буквой для быстрого переходя по окнам.
 vim.keymap.set('n', '<leader>wj', require('nvim-window').pick)
