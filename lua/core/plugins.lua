@@ -31,7 +31,8 @@ require("lazy").setup({
                 ensure_installed = {
                     "clangd", "debugpy", "flake8", "golangci-lint", -- "delve", 
                     "isort", "lua-language-server", "luaformatter", "prettierd",
-                    "pylint", "pyright", "shellcheck", "stylua"
+                    "pylint", "pyright", "shellcheck", "stylua",
+                    "bash-language-server", "bash-debug-adapter", "texlab"
                 },
                 start_delay = 0
             })
@@ -92,7 +93,41 @@ require("lazy").setup({
         end
     }, {"chentoast/marks.nvim", event = "VeryLazy", opts = {}},
     {"tpope/vim-surround"}, {"tpope/vim-fugitive"},
-    -- подключение собстввенных плагинов
+    -- плагины для отрбражения картинок
+    {
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add options here
+            -- or leave it empty to use the default settings
+        },
+        keys = {
+            -- suggested keymap
+            {
+                "<leader>p",
+                "<cmd>PasteImage<cr>",
+                desc = "Paste image from system clipboard"
+            }
+        }
+    }, {
+        "iamcco/markdown-preview.nvim",
+        cmd = {
+            "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop"
+        },
+        build = "cd app && npm install",
+        init = function()
+            vim.g.mkdp_filetypes = {"markdown"}
+        end,
+        ft = {"markdown"}
+    }, {
+        "lervag/vimtex",
+        lazy = false, -- we don't want to lazy load VimTeX
+        -- tag = "v2.15", -- uncomment to pin to a specific release
+        init = function()
+            -- VimTeX configuration goes here, e.g.
+            vim.g.vimtex_view_general_viewer = "okular"
+        end
+    }, -- подключение собстввенных плагинов
     {dir = path_to_my_plugin .. "switch_buffer"},
     {dir = path_to_my_plugin .. "surround"}
 })

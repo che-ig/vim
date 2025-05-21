@@ -28,6 +28,22 @@ lspconfig.pyright.setup {
 
 lspconfig.ts_ls.setup {}
 lspconfig.prismals.setup {}
+-- lsp для markdown
+lspconfig.marksman.setup {
+    capabilities = capabilities,
+    on_attach = lsp_common.on_attach
+}
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#texlab
+lspconfig.texlab.setup {
+    capabilities = capabilities,
+    on_attach = lsp_common.on_attach
+}
+-- lsp для bash
+lspconfig.bashls.setup {
+    capabilities = capabilities,
+    on_attach = lsp_common.on_attach
+}
+
 lspconfig.cssls.setup {capabilities = capabilities}
 
 -- https://clangd.llvm.org/installation.html

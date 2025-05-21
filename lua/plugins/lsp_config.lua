@@ -18,9 +18,13 @@ function format_import(timeoutms)
     -- (lua/vim/lsp/handler.lua) for how to do this properly.
     local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction",
                                             params, timeoutms)
-    if not result or next(result) == nil then return end
+    if not result or next(result) == nil then
+        return
+    end
     local actions = result[1].result
-    if not actions then return end
+    if not actions then
+        return
+    end
     local action = actions[1]
 
     -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
