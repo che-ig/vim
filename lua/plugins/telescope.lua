@@ -23,7 +23,7 @@ vim.keymap.set('n', 'gr', builtin.lsp_references,
                {noremap = true, silent = true})
 vim.keymap.set('n', 'gd', builtin.lsp_definitions,
                {noremap = true, silent = true})
-vim.keymap.set("n", ",fg",
+vim.keymap.set("n", ",f",
                ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 
 require('telescope').setup {

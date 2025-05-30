@@ -93,7 +93,7 @@ require("lazy").setup({
         end
     }, {"chentoast/marks.nvim", event = "VeryLazy", opts = {}},
     {"tpope/vim-surround"}, {"tpope/vim-fugitive"},
-    -- плагины для отрбражения картинок
+    {"nvim-pack/nvim-spectre", dependencies = {"nvim-lua/plenary.nvim"}}, -- плагины для отрбражения картинок
     {
         "HakonHarnes/img-clip.nvim",
         event = "VeryLazy",

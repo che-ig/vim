@@ -23,4 +23,4 @@ nvim_win.setup({
     border = 'single'
 })
 -- Показывами для каждого окна небольшую плашку с буквой для быстрого переходя по окнам.
-vim.keymap.set('n', '<leader>wj', require('nvim-window').pick)
+vim.keymap.set('n', ',w', require('nvim-window').pick)

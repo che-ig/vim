@@ -1,8 +1,8 @@
 -- local api = vim.api
 --
 -- require("nvim_comment").setup({
---     line_mapping = "<leader>c",
---     operator_mapping = "<leader>c",
+--     line_mapping = ",c",
+--     operator_mapping = ",c",
 --     hook = function()
 --         local filetype = api.nvim_buf_get_option(0, "filetype")
 --         if filetype == "c" or filetype == "cpp" then
@@ -21,25 +21,25 @@ require("Comment").setup({
     ---LHS of toggle mappings in NORMAL mode
     toggler = {
         ---Line-comment toggle keymap
-        line = '<leader>cc',
+        line = ',c',
         ---Block-comment toggle keymap
-        block = '<leader>cb'
+        block = ',cb'
     },
     ---LHS of operator-pending mappings in NORMAL and VISUAL mode
     opleader = {
         ---Line-comment keymap
-        line = '<leader>cc',
+        line = ',c',
         ---Block-comment keymap
-        block = '<leader>cb'
+        block = ',cb'
     },
     ---LHS of extra mappings
     extra = {
         ---Add comment on the line above
-        above = '<leader>cO',
+        above = ',cO',
         ---Add comment on the line below
-        below = '<leader>coo',
+        below = ',co',
         ---Add comment at the end of line
-        eol = '<leader>cA'
+        eol = ',cA'
     },
     ---Enable keybindings
     ---NOTE: If given `false` then the plugin won't create any mappings
