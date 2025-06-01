@@ -7,6 +7,10 @@ vim.api.nvim_create_autocmd("BufWritePost", {
         --     'ctags', '-R', '−f *.c', '−f *.go', '−f *.py',
         --     '--exclude=.git', '--exclude=*.sql'
         -- }
-        {'ctags', '-R', '--fields=+ne', '--languages=C,C++,Python,Go,Lua,Sh'})
+        {
+            'ctags',
+            '--exclude={.git/*,.env/*,.idea/*,.venv/*,.vscode/*,.mypy_cache/*,.ruff_cache/*}',
+            '-R', '--fields=+ne', '--languages=C,C++,Python,Go,Lua,Sh'
+        })
     end
 })

@@ -14,7 +14,7 @@ lspconfig.pyright.setup {
     single_file_support = true,
     settings = {
         python = {
-            pythonPath = "/home/che/.cache/pypoetry/virtualenvs/poetry-temp-R4LpgGoU-py3.10/bin/python",
+            pythonPath = "/home/che/git/Machine-learning/.venv/bin/python",
             analysis = {
                 autoImportCompletions = true,
                 autoSearchPaths = true,

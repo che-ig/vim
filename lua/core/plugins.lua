@@ -32,7 +32,8 @@ require("lazy").setup({
                     "clangd", "debugpy", "flake8", "golangci-lint", -- "delve", 
                     "isort", "lua-language-server", "luaformatter", "prettierd",
                     "pylint", "pyright", "shellcheck", "stylua",
-                    "bash-language-server", "bash-debug-adapter", "texlab"
+                    "bash-language-server", "bash-debug-adapter", "texlab",
+                    "ruff"
                 },
                 start_delay = 0
             })
@@ -93,8 +94,8 @@ require("lazy").setup({
         end
     }, {"chentoast/marks.nvim", event = "VeryLazy", opts = {}},
     {"tpope/vim-surround"}, {"tpope/vim-fugitive"},
-    {"nvim-pack/nvim-spectre", dependencies = {"nvim-lua/plenary.nvim"}}, -- плагины для отрбражения картинок
-    {
+    {"nvim-pack/nvim-spectre", dependencies = {"nvim-lua/plenary.nvim"}}, {
+        -- плагины для отрбражения картинок
         "HakonHarnes/img-clip.nvim",
         event = "VeryLazy",
         opts = {
