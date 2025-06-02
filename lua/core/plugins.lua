@@ -32,7 +32,7 @@ require("lazy").setup({
                     "clangd", "debugpy", "golangci-lint", -- "delve", 
                     "lua-language-server", "luaformatter", "prettierd",
                     "pyright", "shellcheck", "stylua", "bash-language-server",
-                    "bash-debug-adapter", "texlab", "ruff"
+                    "bash-debug-adapter", "texlab", "ruff", "marksman"
                     -- "flake8", "isort", "pylint", "black" 
                 },
                 start_delay = 0
