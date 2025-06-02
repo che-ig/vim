@@ -2,15 +2,11 @@
 vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = {"*.go", "*.py", "*.c", "*.h"},
     callback = function()
-        -- vim.fn.system({'ctags', '-R', '--exclude=.git', '*.go'})
-        vim.fn.system( -- {
-        --     'ctags', '-R', '−f *.c', '−f *.go', '−f *.py',
-        --     '--exclude=.git', '--exclude=*.sql'
-        -- }
-        {
-            'ctags',
-            '--exclude={.git/*,.env/*,.idea/*,.venv/*,.vscode/*,.mypy_cache/*,.ruff_cache/*}',
-            '-R', '--fields=+ne', '--languages=C,C++,Python,Go,Lua,Sh'
+        vim.system({
+            'ctags', '--exclude=.git', '--exclude=.env', '--exclude=.idea',
+            '--exclude=.venv', '--exclude=.vscode', '--exclude=.mypy_cache',
+            '--exclude=.ruff_cache', '-R', '--fields=+ne',
+            '--languages=C,C++,Python,Go,Lua,Sh'
         })
     end
 })

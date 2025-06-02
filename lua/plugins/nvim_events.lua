@@ -3,11 +3,17 @@ local uv = vim.uv or vim.loop
 
 -- Опрашиваем систему на предмет нажатия capslock
 local function is_capslock()
-    local cmd = "xset q 2> /dev/null | grep 'LED' | awk '{print $NF}'"
+    -- Воспользуемся утилитой xset командной строки для получения
+    -- текущих параметров x-сервера
+    local cmd = {"xset", "q"}
+    -- выполняем команду cmd в фоновом режиме (в результате получаем объект)
+    local result_cmd = vim.system(cmd, {text = true}):wait()
+    -- В тексте выискиваем подстроку LED mask и забираем от туда признак
+    -- отражающий включение caps lock
+    local res = result_cmd.stdout:match("LED mask:  (%g+)")
     -- 00000000 capslock turns off
     -- 00000001 capslock turns on
-    local output = tonumber(vim.trim(vim.fn.system(cmd)))
-    -- print(output)
+    local output = tonumber(vim.trim(res))
     return output
 end
 
