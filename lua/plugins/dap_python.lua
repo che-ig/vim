@@ -37,7 +37,9 @@ dap.adapters.python = function(cb, config)
             type = "executable",
             -- command = '/home/stepan/.cache/pypoetry/virtualenvs/telegrambot-XV0byvRV-py3.12/bin/python', -- 'path/to/virtualenvs/debugpy/bin/python',
             -- command = '/usr/bin/python3',
-            command = "python3",
+            -- command = "python3",
+            -- command = os.getenv("HOME") .. '/git/Machine-learning/.venv/bin/python3',
+            command = pythonPath(),
             args = {"-m", "debugpy.adapter"},
             options = {source_filetype = "python"}
         })
@@ -52,8 +54,7 @@ dap.configurations.python = {
         console = "integratedTerminal",
         justMyCode = false,
         -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-        program = "${file}", -- This configuration will launch the current file if used.
-        pythonPath = pythonPath()
+        program = "${file}" -- This configuration will launch the current file if used.
     }, -- {
     --         type = 'python',
     --         request = 'launch',
@@ -81,7 +82,6 @@ dap.configurations.python = {
             local args_string = vim.fn.input("Arguments: ")
             return vim.split(args_string, " +")
         end,
-        console = "integratedTerminal",
-        pythonPath = pythonPath()
+        console = "integratedTerminal"
     }
 }

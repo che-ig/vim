@@ -45,7 +45,7 @@ z=z появится полный список
 для исправления в режиме редактирования
 <c-x><c-s>
 --]]
-kmap("n", ",s", function()
+kmap("n", ",ss", function()
     vim.wo.spell = true
     vim.opt.spelllang = {"en_us", "ru_ru"}
 end)
