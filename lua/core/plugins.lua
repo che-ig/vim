@@ -128,7 +128,8 @@ require("lazy").setup({
             -- VimTeX configuration goes here, e.g.
             vim.g.vimtex_view_general_viewer = "okular"
         end
-    }, -- подключение собстввенных плагинов
+    }, {"hat0uma/csvview.nvim"},
+    -- подключение собстввенных плагинов
     {dir = path_to_my_plugin .. "switch_buffer"},
     {dir = path_to_my_plugin .. "surround"}
 })
