@@ -8,8 +8,9 @@ if not (dap_ok and dap_ui_ok) then
     return
 end
 
-dap.listeners.after.event_initialized["dapui_config"] =
-    function() dapui.open() end
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+end
 -- закрывать отладчик после завершения
 -- dap.listeners.before.event_terminated["dapui_config"] =
 --     function() dapui.close() end
@@ -102,25 +103,31 @@ vim.fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
 vim.fn.sign_define("DapLogPoint", dap_breakpoint.logpoint)
 vim.fn.sign_define("DapStopped", dap_breakpoint.stopped)
 
-vim.keymap.set("n", "<Leader>dc", dap.continue)
-vim.keymap.set("n", "<Leader>dn", dap.step_over)
-vim.keymap.set("n", "<Leader>di", dap.step_into)
-vim.keymap.set("n", "<Leader>do", dap.step_out)
-vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
+vim.keymap.set("n", "<Leader>dc", dap.continue,
+               {desc = "statr a new debug session"})
+vim.keymap.set("n", "<Leader>dn", dap.step_over, {desc = "step over"})
+vim.keymap.set("n", "<Leader>di", dap.step_into, {desc = "step into"})
+vim.keymap.set("n", "<Leader>do", dap.step_out, {desc = "step out"})
+vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint,
+               {desc = "Creates or removes a breakpoint at the current line"})
 
-vim.keymap.set("n", "<Leader>dB", function() dap.set_breakpoint() end)
+vim.keymap.set("n", "<Leader>dB", function()
+    dap.set_breakpoint()
+end, {desc = "create a breakpoint"})
 vim.keymap.set("n", "<Leader>dbc", function()
     dap.set_breakpoint(vim.fn.input("condition: "), nil, nil)
-end)
+end, {desc = "create a breakpoint with condition"})
 vim.keymap.set("n", "<Leader>dC", function()
     dap.clear_breakpoints()
     require("notify")("Breakpoints cleared", "warn")
-end)
+end, {desc = "Removes all breakpoints"})
 
-vim.keymap.set({"n", "v"}, "<Leader>dh",
-               function() require("dap.ui.widgets").hover() end)
-vim.keymap.set({"n", "v"}, "<Leader>dp",
-               function() require("dap.ui.widgets").preview() end)
+vim.keymap.set({"n", "v"}, "<Leader>dh", function()
+    require("dap.ui.widgets").hover()
+end, {desc = "show debug variables"})
+vim.keymap.set({"n", "v"}, "<Leader>dp", function()
+    require("dap.ui.widgets").preview()
+end)
 
 -- vim.keymap.set('n', '<Leader>df', function()
 --     local widgets = require('dap.ui.widgets')
@@ -139,4 +146,4 @@ vim.keymap.set("n", "<leader>de", function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true,
                                                          true), "n", false)
     require("notify")("Debugger session ended", "warn")
-end)
+end, {desc = "Close debugger and clear breakpoints"})
