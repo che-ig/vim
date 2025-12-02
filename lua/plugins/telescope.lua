@@ -6,15 +6,16 @@
 -- :checkhealth telescope
 local builtin = require('telescope.builtin')
 local lga_actions = require("telescope-live-grep-args.actions")
+local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fw', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {desc = "Find files"})
+vim.keymap.set('n', '<leader>fw', builtin.live_grep, {desc = "Search for text"})
 
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {desc = "Find buffers"})
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, {})
 vim.keymap.set('n', '<leader>fn', builtin.resume, {})
 -- vim.keymap.set('n', '<Tab>', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {desc = "Help tags"})
 vim.keymap.set('n', '<leader>gb', builtin.git_branches, {})
 vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
 vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
@@ -24,7 +25,12 @@ vim.keymap.set('n', 'gr', builtin.lsp_references,
 vim.keymap.set('n', 'gd', builtin.lsp_definitions,
                {noremap = true, silent = true})
 vim.keymap.set("n", ",f",
-               ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+               ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+               {desc = "Seaarch for text in files"})
+vim.keymap.set("n", ",fc", live_grep_args_shortcuts.grep_word_under_cursor,
+               {desc = "Search for text under cursor"})
+vim.keymap.set("v", ",f", live_grep_args_shortcuts.grep_visual_selection,
+               {desc = "Search for selected text"})
 
 require('telescope').setup {
     pickers = {

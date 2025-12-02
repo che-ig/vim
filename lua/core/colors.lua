@@ -1,3 +1,5 @@
+-- берем цветовую палитру из эмулятора терминала.	
+-- Enables 24-bit RGB color in the |TUI|.
 vim.opt.termguicolors = true
 function SetColor(color)
     color = color or "kanagawa" -- kanagawa onedark
