@@ -4,6 +4,7 @@
 -- sudo apt install fd-find
 -- ln -s $(which fdfind) ~/.local/bin/fd
 -- :checkhealth telescope
+local telescope = require("telescope")
 local builtin = require('telescope.builtin')
 local lga_actions = require("telescope-live-grep-args.actions")
 local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
@@ -32,7 +33,7 @@ vim.keymap.set("n", ",fc", live_grep_args_shortcuts.grep_word_under_cursor,
 vim.keymap.set("v", ",f", live_grep_args_shortcuts.grep_visual_selection,
                {desc = "Search for selected text"})
 
-require('telescope').setup {
+telescope.setup {
     pickers = {
         find_files = {no_ignore = false, hidden = true}, -- , , theme = "dropdown"
         live_grep = {additional_args = {"--hidden"}}
@@ -57,3 +58,5 @@ require('telescope').setup {
         }
     }
 }
+
+telescope.load_extension("live_grep_args")
