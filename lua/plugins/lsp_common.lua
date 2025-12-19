@@ -57,7 +57,7 @@ M.on_attach = function(client, bufnr)
                    "<cmd>lua vim.lsp.buf.type_definition()<CR>", get_opts())
     -- Переименование указанной сущности
     buf_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",
-                   get_opts())
+                   get_opts({desc = "rename symbol"}))
     -- Выводим в quickfix все упоминания искомого слова
     buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>",
                    get_opts({
@@ -74,7 +74,8 @@ M.on_attach = function(client, bufnr)
     buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>",
                    get_opts())
     buf_set_keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", -- setloclist setqflist
-                   get_opts())
+                   get_opts(
+                       {desc = "Lists all diagnostics to the quickfix window"}))
 
     -- Set some keybinds conditional on server capabilities
     -- :lua vim.lsp.get_active_clients()[1].server_capabilities
