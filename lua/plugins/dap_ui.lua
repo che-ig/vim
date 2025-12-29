@@ -55,7 +55,7 @@ dapui.setup({
 })
 
 local dap_breakpoint_color = {
-    breakpoint = {ctermbg = 0, fg = "#993939", bg = "#31353f"},
+    breakpoint = {ctermbg = 0, fg = "#ff886e", bg = "#31353f"},
     logpoing = {ctermbg = 0, fg = "#61afef", bg = "#31353f"},
     stopped = {ctermbg = 0, fg = "#98c379", bg = "#31353f"}
 }
