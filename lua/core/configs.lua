@@ -8,7 +8,12 @@ opt.showmode = true
 opt.updatetime = 100
 wo.signcolumn = "yes"
 opt.scrolloff = 8
+-- перенос текста по словам а не по буквам, в случае длинной строки
 wo.linebreak = true
+-- принудительный перенос слов после превышения заданной длины строки
+opt.textwidth = 120
+-- вертикальная полоса-ограничитель ширины строки
+opt.colorcolumn = "90"
 opt.virtualedit = "block"
 opt.undofile = true
 opt.shell = "/bin/fish"

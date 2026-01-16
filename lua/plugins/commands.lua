@@ -1,5 +1,32 @@
 -- В данном модуле находятся пользовательские команды
 local api = vim.api
+
+-- Подцветка строки у которой длина превышает заданное значение
+vim.cmd([[highlight OverLength ctermbg=darkred guibg=#592929]])
+-- функция для подцвечивания строк, превышающих заданное количество симвоов
+local function highlight_overlong_lines()
+    local regex = '\\%>' .. vim.bo.textwidth .. 'v.\\+'
+    vim.fn.matchadd("OverLength", regex)
+end
+
+-- Молчаливое выполнение передаваемых команд
+local function silent_cmd(command)
+    -- https://neovim.io/doc/user/vimfn.html#winrestview()
+    local view = vim.fn.winsaveview()
+    -- silent - для молчаливого выполнения команды, 
+    -- т.е обычные сообщения не будут отправлены или добавлены в историю сообщений.
+    -- keepjumps необходим для того, чтобы не сохранялся jumplist
+    -- https://neovim.io/doc/user/motion.html#%3Akeepjumps
+    -- keeppatterns Выполнить команду {command}, не добавляя ничего в историю поиска
+    vim.cmd('silent keepjumps keeppatterns ' .. command)
+    vim.fn.winrestview(view)
+end
+
+-- функция для переноса строк при превышении заданного значения
+local function split_overlong_lines()
+    silent_cmd('g/\\%>' .. vim.bo.textwidth .. 'v.\\+/normal gwl')
+end
+
 -- Ищет слово под курсором в файле tags (созданный утилитой ctags)
 api.nvim_create_user_command('Tags', function(opts)
     local cursor_word = vim.fn.expand("<cword>")
@@ -48,4 +75,12 @@ api.nvim_create_user_command('ToggleCase', function(opts)
     else
         vim.cmd("SnakeCase")
     end
+end, {})
+
+-- команда для переноса строк при превышении заданного значения
+api.nvim_create_user_command('SplitLinesInBuffer', function(opts)
+    split_overlong_lines()
+end, {})
+api.nvim_create_user_command('HighlightOverLongLines', function(opts)
+    highlight_overlong_lines()
 end, {})
